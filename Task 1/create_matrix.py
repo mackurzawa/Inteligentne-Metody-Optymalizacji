@@ -18,10 +18,14 @@ def calculate_distance(p1, p2):
 
 
 def build_matrix(coordinates):
-    matrix = [[0] * 100 for _ in range(len(coordinates))]
-    for i, p1 in enumerate(coordinates):
-        for j, p2 in enumerate(coordinates):
-            matrix[i][j] = calculate_distance(p1, p2)
+    n = 100
+    matrix = [[0] * n for _ in range(len(coordinates))]
+
+    for i in range(n):
+        for j in range(i+1, n):
+            distance = calculate_distance(coordinates[i], coordinates[j])
+            matrix[i][j] = distance
+            matrix[j][i] = distance
 
     return matrix
 
