@@ -1,16 +1,17 @@
-from create_matrix import *
+from greedy_cycle import *
 
 
-def main():
-    file_a = 'Graphs/kroA100.tsp.txt'
-    file_b = 'Graphs/kroB100.tsp.txt'
-
-    coordinates_a = read_data(file_a)
-    matrix_a = build_matrix(coordinates_a)
-    print(matrix_a)
+def main(file):
+    coordinates = read_data(file)
+    matrix = build_matrix(coordinates)
+    greedy_cycle_method(coordinates, matrix)
 
 
 if __name__ == '__main__':
-    main()
+    file_a = 'Graphs/kroA100.tsp.txt'
+    file_b = 'Graphs/kroB100.tsp.txt'
+
+    main(file_a)
+    main(file_b)
 
 
