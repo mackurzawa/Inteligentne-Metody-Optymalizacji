@@ -3,61 +3,52 @@ import numpy as np
 from draw_graph import draw_graph
 
 
-def greedy_closest_neighbour(m):
+def greedy_closest_neighbour(m, starting_vertex):
     numbers = 100
+
     m = list(np.array(m)[:numbers, :numbers])
-    # node_coords = node_coords[:numbers]
 
-    nums = list(range(numbers))
-    vertex1 = rn.choice(nums)
-    nums.remove(vertex1)
-    vertex2 = rn.choice(nums)
-    vertex2 = np.argmax(m[vertex1])
-    visited_value = np.amax(m) + 1
-    for i in range(len(m)):
-        m[i][i] = visited_value
+    remaining = list(range(numbers))
 
-    # cycle1 = [node_coords[vertex1]]
-    # cycle2 = [node_coords[vertex2]]
-    cycle1 = [vertex1]
-    cycle2 = [vertex2]
+    vertex_1 = starting_vertex
+    vertex_2 = np.argmax(m[vertex_1])
 
-    length1 = 0
-    length2 = 0
+    remaining.remove(vertex_1)
+    remaining.remove(vertex_2)
 
-    for i in range(numbers-2):
-        for j in range(numbers):
-            m[j][vertex1] = visited_value
-            m[j][vertex2] = visited_value
+    cycle_1 = [vertex_1]
+    cycle_2 = [vertex_2]
 
-        min1 = min(m[vertex1])
-        min2 = min(m[vertex2])
+    for i in range(numbers - 2):
+        minimum_1 = np.amax(m)
+        for v_1 in cycle_1:
+            for r in remaining:
+                if minimum_1 > m[v_1][r]:
+                    minimum_1 = m[v_1][r]
+                    closest_r_1 = r
+                    closest_v_1 = v_1
 
-        if len(cycle1) < numbers/2:
-            if len(cycle2) < numbers/2:
-                if min1 < min2:
-                    vertex1 = np.argmin(m[vertex1])
-                    cycle1.append(vertex1)
-                    length1 += min1
+        minimum_2 = np.amax(m)
+        for v_2 in cycle_2:
+            for r in remaining:
+                if minimum_2 > m[v_2][r]:
+                    minimum_2 = m[v_2][r]
+                    closest_r_2 = r
+                    closest_v_2 = v_2
+
+        if len(cycle_1) < numbers / 2:
+            if len(cycle_2) < numbers / 2:
+                if minimum_1 < minimum_2:
+                    cycle_1.insert(cycle_1.index(closest_v_1) + 1, closest_r_1)
+                    remaining.remove(closest_r_1)
                 else:
-                    vertex2 = np.argmin(m[vertex2])
-                    cycle2.append(vertex2)
-                    length2 += min2
+                    cycle_2.insert(cycle_2.index(closest_v_2) + 1, closest_r_2)
+                    remaining.remove(closest_r_2)
             else:
-                vertex1 = np.argmin(m[vertex1])
-                cycle1.append(vertex1)
-                length1 += min1
+                cycle_1.insert(cycle_1.index(closest_v_1) + 1, closest_r_1)
+                remaining.remove(closest_r_1)
         else:
-            vertex2 = np.argmin(m[vertex2])
-            cycle2.append(vertex2)
-            length2 += min2
+            cycle_2.insert(cycle_2.index(closest_v_2) + 1, closest_r_2)
+            remaining.remove(closest_r_2)
 
-    # length1 += round(((cycle1[0][0] - cycle1[-1][0])**2 + (cycle1[0][1] - cycle1[-1][1])**2)**(1/2))
-    # length2 += round(((cycle2[0][0] - cycle2[-1][0])**2 + (cycle2[0][1] - cycle2[-1][1])**2)**(1/2))
-
-    length1 += round(m[cycle1[0]][cycle1[-1]])
-    length2 += round(m[cycle2[0]][cycle2[-1]])
-
-    print(length1, length2)
-    return cycle1, cycle2
-    # draw_graph(node_coords, cycle1[0], cycle2[0], cycle1, cycle2, 'Greedy nearest neighbour')
+    return cycle_1, cycle_2
