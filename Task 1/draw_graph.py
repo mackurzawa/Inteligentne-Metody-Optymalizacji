@@ -12,6 +12,12 @@ def draw_graph(node_coords, start_point_1, start_point_2, cycle_1, cycle_2, titl
     cycle_1.append(cycle_1[0])
     cycle_2.append(cycle_2[0])
 
+    start_point_1 = node_coords[start_point_1]
+    start_point_2 = node_coords[start_point_2]
+
+    cycle_1 = [node_coords[cycle_1[i]] for i in range(len(cycle_1))]
+    cycle_2 = [node_coords[cycle_2[i]] for i in range(len(cycle_2))]
+
     x_arr, y_arr = split_coordinates(node_coords)
     cycle_1_x, cycle_1_y = split_coordinates(cycle_1)
     cycle_2_x, cycle_2_y = split_coordinates(cycle_2)
