@@ -23,14 +23,14 @@ def draw_graph(node_coords, start_point_1, start_point_2, cycle_1, cycle_2, titl
     cycle_2_x, cycle_2_y = split_coordinates(cycle_2)
 
     fig = go.Figure(data=[
-        go.Scatter(x=x_arr, y=y_arr, mode='markers', name='Wszystkie dane'),
-        go.Scatter(x=[start_point_1[0]], y=[start_point_1[1]], marker=dict(size=10, color='red'), name='Start 1'),
-        go.Scatter(x=[start_point_2[0]], y=[start_point_2[1]], marker=dict(size=10, color='red'), name='Start 2'),
+        # go.Scatter(x=x_arr, y=y_arr, mode='markers', name='Wszystkie dane'),
+        go.Scatter(x=[start_point_1[0]], y=[start_point_1[1]], marker=dict(size=10, color='red'),
+                   name='Wierzchołek startowy 1'),
+        go.Scatter(x=[start_point_2[0]], y=[start_point_2[1]], marker=dict(size=10, color='red'),
+                   name='Wierzchołek startowy 2'),
         go.Scatter(x=cycle_1_x, y=cycle_1_y, mode='lines+markers', name='Cykl 1'),
         go.Scatter(x=cycle_2_x, y=cycle_2_y, mode='lines+markers', name='Cykl 2')
         ])
 
     fig.update_layout(title=title)
     fig.show()
-
-
