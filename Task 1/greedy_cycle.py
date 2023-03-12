@@ -37,11 +37,11 @@ def extend_cycle(matrix, cycle, remaining):
     best_location = 0
 
     for new_vertex in remaining:
-        for cycle_index, cycle_vertex in enumerate(cycle):
-            extra_distance = calculate_extra_distance(cycle, new_vertex, cycle_index, matrix)
+        for location in range(len(cycle)):
+            extra_distance = calculate_extra_distance(cycle, new_vertex, location, matrix)
             if extra_distance < min_extra_distance:
                 min_extra_distance = extra_distance
                 best_vertex = new_vertex
-                best_location = cycle_index
+                best_location = location
 
     insert_to_cycle(cycle, best_vertex, remaining, best_location)
